@@ -1,0 +1,22 @@
+html
+	head
+		title express x2
+
+	body
+		h1 impresion sencilla
+		h2!= hola
+
+		- var saludo = "saludo en variable";
+		h3!= "<h3>"+saludo+"</h3>"
+
+		//interpolacion con JS de etiquetas 
+		h1.
+			hola #[a(href="faksjd.com") #{saludo}] interpolado xD
+		//hola #[h4 #{saludo}] interpolado xD
+		
+
+		//de esta manera sae hacen comentario simple
+		<!--de esta manera
+		comentamos varias lineas-->
+
+
