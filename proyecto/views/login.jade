@@ -1,0 +1,13 @@
+extends ./layout.jade
+block contenido
+	h1 Registrate / Inicia sesión
+	form(action="/users" mothod="POST")
+		div(class="form-group")
+			label(for="emial") Email &nbsp;
+			input(type="text" name="email" placeholder="Email" id="email" class="form-control")
+		div(class="form-group")
+			label(for="pasword") Pasword &nbsp;
+			input(type="pasword" name="pasword" placeholder="consraña" id="pasword" class="form-control")
+
+		div(class="form-group")
+			input(type="submit" value="Inisiar sesión" class="btn btn-info")
