@@ -22,7 +22,7 @@ app.get("/", function(req,res){
 
 app.get("/login", function(req,res){
 	User.find(function(err,doc){
-		console.log(doc);
+		//console.log(doc);
 		res.render("login");
 	});
 });
@@ -31,18 +31,19 @@ app.post("/users",function(req,res){
 	//console.log("contra "+req.body.password);console.log("email "+req.body.email);
 	var user = new User({email: req.body.email, 
 						password: req.body.password,
-						password_confirmation: req.body.password_confirmation
+						password_confirmation: req.body.p_confirmation,
+						username: req.body.username
 					});
-	console.log(user.password_confirmation);
-
-	if(user.password_confirmation == null){
-		res.send("no se pudo compa-kun");
-	}else{
-		user.save(function(){
-			//aqui se validan errores.. y se envia la respouesta al usuario
-			res.send("se realizo compa");
-		});
-	}
+	//console.log(user.password_confirmation);
+	console.log(user.username);
+	
+	user.save(function(err){
+		//aqui se validan errores.. y se envia la respouesta al usuario
+		if(err){
+			console.log(String(err));
+		}
+		res.send("se realizo compa");
+	});
 
 });
 
