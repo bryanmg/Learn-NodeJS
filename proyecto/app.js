@@ -4,6 +4,9 @@
 var express = require("express");//carga de express
 var bodyParser = require("body-parser");//body parser require para poder leer parametros
 var User_Model = require("./models/user").User;
+var session = require("express-session");
+var router_app = require("./routes");
+var session_middleware = require("./middlewares/session");
 var app = express();
 
 
@@ -11,12 +14,18 @@ var app = express();
 app.use("/public",express.static('public'));//midleware para archivos estaticos
 app.use(bodyParser.json());//para leer json's
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(session({
+	secret: "EstoesSecreto190",
+	resave: false,
+	saveUninitialized: false
+}));
 
 app.set("view engine", "jade");//-->para poder utilizar jade
 
 
 /**+************** ESTABLEZCO LAS ACCIONES QUE VA A REALIZAR EN MIS DIFERENTES VISTAS **************/
 app.get("/", function(req,res){
+	//console.log(req.session.user_id);
 	res.render("index");
 });
 
@@ -42,14 +51,7 @@ app.post("/users",function(req,res){
 								username: req.body.username
 							});
 	
-	/*/EJECUCION ASINCRONA
-	user.save(function(err){
-		//aqui se validan errores.. y se envia la respouesta al usuario
-		if(err){
-			console.log(String(err));
-		}
-		res.send("se realizo compa");
-	});*/
+	
 	//PROMISES -- EJECUCION SINCRONA
 	user.save().then(function(us){
 		res.send("Se guardo el usuario");
@@ -60,26 +62,42 @@ app.post("/users",function(req,res){
 
 });
 
-app.post("/dashboard", function(req,res){
+app.post("/sessions", function(req,res){
 	var parms = {email: req.body.email, password: req.body.password};
 	
 	User_Model.findOne(parms, function(err, docs){
-		console.log(docs);
-		if(docs.email == parms.email && docs.password == parms.password){
-			res.send("si coincidieron");
+		if(err){
+			res.send("NO SE PUEDE INICIAR SESIÓN");
 		}else{
-			res.send("no quedaron compa");
+			req.session.user_id = docs._id;
+			console.log(req.session.user_id);
+			//res.send("ya se hixo");
+			res.redirect("/app");
 		}
 	});
 });
 
-app.listen(8080);
+app.use("/app",session_middleware);
+app.use("/app", router_app);
+
+app.listen(8080); 
+
+
+/*/EJECUCION ASINCRONA
+	user.save(function(err){
+		//aqui se validan errores.. y se envia la respouesta al usuario
+		if(err){
+			console.log(String(err));
+		}
+		res.send("se realizo compa");
+	});*/
 
 /*
-console.log("docs.username: "+docs.username);
-console.log("parms.email: "+parms.email);
-console.log("docs.password: "+docs.password);
-console.log("parms.password: "+parms.password);
+if(docs.email == parms.email && docs.password == parms.password){
+	res.send("si coincidieron");
+}else{
+	res.send("no quedaron compa");
+}
 */
 
 

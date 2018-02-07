@@ -1,3 +1,19 @@
 body{
-	background-color: red;
+	background-color:  #5d6d7e;
+}
+.right-space{
+	margin-right: 1em;
+	margin-left: 30%;
+}
+.remove-float{
+	float: none;
+}
+.top-space{
+	margin-top: 2em;
+}
+.big-top-space{
+	margin-top: 150px;
+}
+a{
+	color: #239b56;
 }

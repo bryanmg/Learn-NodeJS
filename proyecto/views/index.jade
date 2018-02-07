@@ -1,6 +1,11 @@
 extends ./layout.jade
 block contenido
-	h1 Bienvenido proyecto de fotos
-	a(href="/login") Iniciar sesión
-	br
-	a(href="/sessions") Registrarse
+	div(class = "right-space col-md-4 remove-float center-block big-top-space")
+		h1 Bienvenido proyecto Node JS
+		
+		
+		div(class="row")
+			h3(class="top-space col-xs-12 col-sm-6")
+				a(href="/login") Iniciar sesión
+			h3(class="top-space col-xs-12 col-sm-6 text-right")
+				a(href="/sessions") Registrarse
