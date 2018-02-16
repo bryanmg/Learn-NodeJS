@@ -1,0 +1,16 @@
+extends ../../layout.jade
+block contenido
+	div(class = "right-space col-md-4 remove-float center-block big-top-space image-space")
+		h1(class="text-center") Cargar Imagen
+		form(action="/sessions" method="POST")
+			div(class="form-group")
+				label(for="name") Nombre:
+				input(type="text" name="name" placeholder="Nombre de imagen..." id="name" class="form-control")
+			div(class="form-group")
+				label(for="archivo") Seleccionar:
+				input(type="file" name="archivo" id="archivo" class="form-control")
+
+
+			div(class="row")
+				div(class="col-xs-12 col-sm-6")
+					input(type="submit" value="Enviar" class="btn btn-info")

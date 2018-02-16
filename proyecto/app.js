@@ -70,8 +70,7 @@ app.post("/sessions", function(req,res){
 			res.send("NO SE PUEDE INICIAR SESIÓN");
 		}else{
 			req.session.user_id = docs._id;
-			console.log(req.session.user_id);
-			//res.send("ya se hixo");
+			//console.log(req.session.user_id);
 			res.redirect("/app");
 		}
 	});
