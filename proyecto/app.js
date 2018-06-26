@@ -4,21 +4,27 @@
 var express = require("express");//carga de express
 var bodyParser = require("body-parser");//body parser require para poder leer parametros
 var User_Model = require("./models/user").User;
-var session = require("express-session");
+//var session = require("express-session");//permiten guardar información de la sesion
+var cookieSession = require("cookie-session");
 var router_app = require("./routes");
 var session_middleware = require("./middlewares/session");
 var app = express();
 
 
 /*************** USO LAS CLASES IMPORTADAS *****************************/
+app.use(cookieSession({
+	name: "Session",
+	keys: ["key1","key2","key3"]
+}));//utiliza las cookies establercida
+
 app.use("/public",express.static('public'));//midleware para archivos estaticos
 app.use(bodyParser.json());//para leer json's
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(session({
+/*app.use(session({
 	secret: "EstoesSecreto190",
 	resave: false,
 	saveUninitialized: false
-}));
+}));*/
 
 app.set("view engine", "jade");//-->para poder utilizar jade
 
